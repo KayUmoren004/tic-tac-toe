@@ -3,15 +3,15 @@ import React from "react";
 // Dependencies
 import { StyleSheet, Text, View } from "react-native";
 
-const App = () => {
+const GameContainer = () => {
   return (
     <View style={styles.container}>
-      <Text style={{ color: "#fff" }}>App</Text>
+      <Text style={{ color: "#fff" }}>GameContainer</Text>
     </View>
   );
 };
 
-export default App;
+export default GameContainer;
 
 const styles = StyleSheet.create({
   container: {

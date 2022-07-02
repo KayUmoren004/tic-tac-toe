@@ -3,15 +3,15 @@ import React from "react";
 // Dependencies
 import { StyleSheet, Text, View } from "react-native";
 
-const App = () => {
+const Row = () => {
   return (
     <View style={styles.container}>
-      <Text style={{ color: "#fff" }}>App</Text>
+      <Text style={{ color: "#fff" }}>Row</Text>
     </View>
   );
 };
 
-export default App;
+export default Row;
 
 const styles = StyleSheet.create({
   container: {
