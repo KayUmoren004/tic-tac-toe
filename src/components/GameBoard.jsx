@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Alert,
   Button,
+  Animated,
 } from "react-native";
 import { AlertBox, fire } from "react-native-alertbox";
 import Column from "./Column";
@@ -23,6 +24,7 @@ const GameBoard = () => {
   const [currentCell, setCurrentCell] = useState("");
   const [cellsOccupied, setCellsOccupied] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [animation, setAnimation] = useState(new Animated.Value(0));
 
   // Player Move States
   const [p1Moves, setP1Moves] = useState([]);
@@ -123,6 +125,7 @@ const GameBoard = () => {
     setIsDisabled(false);
     setWinner();
     setIsDisabled(false);
+    setAnimation(new Animated.Value(0));
   };
 
   return (
@@ -176,6 +179,8 @@ const GameBoard = () => {
           setP1Moves={setP1Moves}
           p2Moves={p2Moves}
           setP2Moves={setP2Moves}
+          animation={animation}
+          setAnimation={setAnimation}
         />
       </View>
       {winner && (

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Dependencies
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Animated } from "react-native";
 
 import { LeftColumn, RightColumn, CenterColumn } from "../utils/CellNames";
 import Cell from "./Cell";
@@ -35,6 +35,8 @@ const Column = ({
   setCurrentCell,
   currentPlayer,
   setCurrentPlayer,
+  animation,
+  setAnimation,
 }) => {
   const player1 = "X";
   const player2 = "O";
@@ -93,6 +95,11 @@ const Column = ({
         compareArrays(p1Moves, diagWinCase2)
       ) {
         setWinner(players.p1);
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: false,
+        }).start();
         setScore({
           p1: score.p1 + 1,
           p2: score.p2,
@@ -110,6 +117,11 @@ const Column = ({
         compareArrays(p2Moves, diagWinCase2)
       ) {
         setWinner(players.p2);
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: false,
+        }).start();
         setScore({
           p1: score.p1,
           p2: score.p2 + 1,
@@ -128,6 +140,11 @@ const Column = ({
         compareArrays(p1Moves, horWinCase3)
       ) {
         setWinner(players.p1);
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: false,
+        }).start();
         setScore({
           p1: score.p1 + 1,
           p2: score.p2,
@@ -146,6 +163,11 @@ const Column = ({
         compareArrays(p2Moves, horWinCase3)
       ) {
         setWinner(players.p2);
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: false,
+        }).start();
         setScore({
           p1: score.p1,
           p2: score.p2 + 1,
@@ -164,6 +186,11 @@ const Column = ({
         compareArrays(p1Moves, vertWinCase3)
       ) {
         setWinner(players.p1);
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: false,
+        }).start();
         setScore({
           p1: score.p1 + 1,
           p2: score.p2,
@@ -182,6 +209,11 @@ const Column = ({
         compareArrays(p2Moves, vertWinCase3)
       ) {
         setWinner(players.p2);
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: false,
+        }).start();
         setScore({
           p1: score.p1,
           p2: score.p2 + 1,
@@ -195,6 +227,11 @@ const Column = ({
     // if no one wins
     if (p1Moves.length + p2Moves.length === 9) {
       setWinner("Tie");
+      Animated.timing(animation, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: false,
+      }).start();
       setScore({
         p1: "Tie",
         p2: "Tie",
@@ -232,19 +269,58 @@ const Column = ({
   const setBoardColor = () => {
     switch (winner) {
       case players.p1:
-        return styles.p1Wins;
+        return p1Wins;
       case players.p2:
-        return styles.p2Wins;
+        return p2Wins;
       case "Tie":
-        return styles.tie;
+        return tie;
 
       default:
         return styles.container;
     }
   };
 
+  const p1Wins = {
+    backgroundColor: animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgba(224, 186, 215, 0)", "rgba(224, 186, 215, 1)"],
+    }),
+    flexDirection: "row",
+    borderColor: animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgba(224, 186, 215, 0)", "rgba(224, 186, 215, 1)"],
+    }),
+    borderRadius: 25 / 2,
+    // borderWidth: 25,
+  };
+  const p2Wins = {
+    backgroundColor: animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgba(0, 176, 255, 0)", "rgba(0, 176, 255, 1)"],
+    }),
+    flexDirection: "row",
+    borderColor: animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgba(0, 176, 255, 0)", "rgba(0, 176, 255, 1)"],
+    }),
+    borderRadius: 25 / 2,
+  };
+  const tie = {
+    backgroundColor: animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgba(136, 146, 176, 0)", "rgba(136, 146, 176, 1)"],
+    }),
+    flexDirection: "row",
+    borderColor: animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgba(136, 146, 176, 0)", "rgba(136, 146, 176, 1)"],
+    }),
+    borderRadius: 25 / 2,
+    borderWidth: 25,
+  };
+
   return (
-    <View style={setBoardColor()}>
+    <Animated.View style={setBoardColor()}>
       <View>
         {
           // Map LeftColumn to Cell components
@@ -302,7 +378,7 @@ const Column = ({
           })
         }
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -311,26 +387,5 @@ export default Column;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-  },
-  p1Wins: {
-    backgroundColor: "#e0bad7ff",
-    flexDirection: "row",
-    borderColor: "#e0bad7ff",
-    borderRadius: 25 / 2,
-    borderWidth: 25,
-  },
-  p2Wins: {
-    backgroundColor: "#00b0ffff",
-    flexDirection: "row",
-    borderColor: "#00b0ffff",
-    borderRadius: 25 / 2,
-    borderWidth: 25,
-  },
-  tie: {
-    backgroundColor: "#8892b0",
-    flexDirection: "row",
-    borderColor: "#8892b0",
-    borderRadius: 25 / 2,
-    borderWidth: 25,
   },
 });
