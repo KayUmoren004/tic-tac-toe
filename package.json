@@ -4,8 +4,6 @@
   "main": "node_modules/expo/AppEntry.js",
   "homepage": "https://github.com/KayUmoren004/tic-tac-toe",
   "scripts": {
-    "postinstall": "yarn run build",
-    "build": "expo build:web",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
