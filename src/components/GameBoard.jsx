@@ -9,6 +9,8 @@ import {
   Alert,
   Button,
   Animated,
+  Platform,
+  TouchableOpacity,
 } from "react-native";
 import { AlertBox, fire } from "react-native-alertbox";
 import Column from "./Column";
@@ -39,6 +41,15 @@ const GameBoard = () => {
   const p2Score = score.p2;
 
   const [winner, setWinner] = useState();
+
+  // Button for web only
+  const WebButton = ({ onPress }) => {
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <Text style={styles.button}>Reset</Text>
+      </TouchableOpacity>
+    );
+  };
 
   // Prompt for player 1
   const promptPlayer1 = () => {
@@ -215,7 +226,11 @@ const GameBoard = () => {
           // top: 0,
         }}
       >
-        <Button title="Reset" onPress={() => resetGame()} />
+        {Platform.OS === "web" ? (
+          <WebButton onPress={resetGame} />
+        ) : (
+          <Button title="Reset" onPress={() => resetGame()} />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -264,7 +279,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingBottom: 10,
   },
-  tie: {},
-  p1: {},
-  p2: {},
+  button: {
+    color: "#007aff",
+    textAlign: "center",
+    margin: 8,
+    fontSize: 18,
+  },
 });
