@@ -15,7 +15,7 @@ import {
 import { AlertBox, fire } from "react-native-alertbox";
 import Column from "./Column";
 
-const GameBoard = () => {
+const GameBoard = ({ mode }) => {
   const [p1, setP1] = useState("X");
   const [p2, setP2] = useState("O");
 
@@ -36,6 +36,15 @@ const GameBoard = () => {
     p1: 0,
     p2: 0,
   });
+
+  // on mount, determine if AI or real player
+  // useEffect(() => {
+  //   if (mode === "bot") {
+  //     setCurrentPlayer(player1);
+  //   } else {
+  //     setCurrentPlayer(p1);
+  //   }
+  // }, []);
 
   const p1Score = score.p1;
   const p2Score = score.p2;
@@ -87,9 +96,9 @@ const GameBoard = () => {
   };
 
   // Call Player  prompt on mount
-  useEffect(() => {
-    promptPlayer1();
-  }, []);
+  // useEffect(() => {
+  //   promptPlayer1();
+  // }, []);
 
   // Constantly check for winner
   // useEffect(() => {
@@ -192,6 +201,7 @@ const GameBoard = () => {
           setP2Moves={setP2Moves}
           animation={animation}
           setAnimation={setAnimation}
+          mode={mode}
         />
       </View>
       {winner && (

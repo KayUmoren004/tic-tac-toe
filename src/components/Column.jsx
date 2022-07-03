@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Dependencies
 import { StyleSheet, View, Animated } from "react-native";
@@ -37,9 +37,14 @@ const Column = ({
   setCurrentPlayer,
   animation,
   setAnimation,
+  mode,
 }) => {
   const player1 = "X";
   const player2 = "O";
+
+  //  console.log({ botMove: botMove() });
+
+  const [botIsEnabled, setBotIsEnabled] = useState(false);
 
   // Functions
 
@@ -63,13 +68,31 @@ const Column = ({
     checkForWin();
   };
 
+  // disable bot if mode is real player
+  const disableBot = () => {
+    if (mode === "real") {
+      setBotIsEnabled(false);
+    } else {
+      setBotIsEnabled(true);
+    }
+  };
+
+  // check if mode is "bot" on mount
+  useEffect(() => {
+    disableBot();
+  }, []);
+
   const cellPressIn = (cellName) => {
     // Check if cell is occupied
     if (cellsOccupied.includes(cellName)) {
       console.log(`${cellName} is occupied`);
+      // if mode is bot, rerun botMove
+      if (mode === "bot") {
+        botMove();
+      }
     } else {
       // Let User Play in the cell then set the cell to occupied
-      setCurrentCell(cellName);
+
       setCellsOccupied([...cellsOccupied, cellName]);
       setCurrentPlayer(currentPlayer === player1 ? player2 : player1);
 
@@ -317,6 +340,82 @@ const Column = ({
     }),
     borderRadius: 25 / 2,
   };
+
+  // Bot logic
+  const botMove = () => {
+    // Constraints for bot to make a move
+
+    // 0 - 11 for Left Column
+    // 0 - 3 for LTE
+    // 4 - 7 for LME
+    // 8 - 11 for LBE
+
+    // 12 - 23 for Center Column
+    // 12 - 15 for CTE
+    // 16 - 19 for CME
+    // 20 - 23 for CBE
+
+    // 24 - 35 for Right Column
+    // 24 - 27 for RTE
+    // 28 - 31 for RME
+    // 32 - 35 for RBE
+
+    // Randomly select a cell
+    const randomCell = Math.floor(Math.random() * 36);
+
+    // Bot Cell Variable
+
+    // Switch case for botCell based on randomCell and constraints
+    const botCell = () => {
+      switch (true) {
+        case randomCell >= 0 && randomCell <= 3:
+          return LeftColumn[0];
+
+        case randomCell >= 4 && randomCell <= 7:
+          return LeftColumn[1];
+
+        case randomCell >= 8 && randomCell <= 11:
+          return LeftColumn[2];
+
+        case randomCell >= 12 && randomCell <= 15:
+          return CenterColumn[0];
+
+        case randomCell >= 16 && randomCell <= 19:
+          return CenterColumn[1];
+
+        case randomCell >= 20 && randomCell <= 23:
+          return CenterColumn[2];
+
+        case randomCell >= 24 && randomCell <= 27:
+          return RightColumn[0];
+
+        case randomCell >= 28 && randomCell <= 31:
+          return RightColumn[1];
+
+        case randomCell >= 32 && randomCell <= 35:
+          return RightColumn[2];
+      }
+    };
+
+    // console.log(`Bot Move: ${botCell()}`);
+
+    cellPressIn(botCell());
+  };
+
+  // always check if current player is player 2 and cell is not occupied, if true run botMove with useEffect
+  useEffect(() => {
+    // only run if bot is enabled
+    if (botIsEnabled) {
+      if (currentPlayer === player2) {
+        botMove();
+      }
+    }
+  }, [currentPlayer]);
+
+  // check for win after every move
+  useEffect(() => {
+    checkForWin();
+  }, [p1Moves, p2Moves]);
 
   return (
     <Animated.View style={setBoardColor()}>
