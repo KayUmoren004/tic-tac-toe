@@ -1,23 +1,21 @@
 import React from "react";
 
 // Dependencies
-import { StyleSheet, Text, View } from "react-native";
+import { useFonts } from "expo-font";
+
+import GameContainer from "./src/components/GameContainer";
 
 const App = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={{ color: "#fff" }}>App</Text>
-    </View>
-  );
+  const [fontsLoaded] = useFonts({
+    MontserratBold: require("./assets/fonts/Montserrat-Bold.ttf"),
+    MontserratLight: require("./assets/fonts/Montserrat-Light.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return <GameContainer />;
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
