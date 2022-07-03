@@ -190,15 +190,17 @@ const GameBoard = () => {
             justifyContent: "center",
             alignItems: "center",
             borderBottomWidth: 0.5,
-            borderBottomColor: "#fff",
+            borderBottomColor: winnerColor(winner),
             borderTopWidth: 1,
-            borderTopColor: "#fff",
+            borderTopColor: winnerColor(winner),
             padding: 10,
-            backgroundColor: "#fff",
+            backgroundColor: winnerColor(winner),
             // top: 0,
           }}
         >
-          <Text style={styles.winner}>{`${winner} is the winner!`}</Text>
+          <Text style={styles.winner}>
+            {winner === "Tie" ? "Tie Game!" : `${winner} is the winner!`}
+          </Text>
         </View>
       )}
       {/* Reset Button */}
@@ -208,7 +210,7 @@ const GameBoard = () => {
           justifyContent: "center",
           alignItems: "center",
           borderTopWidth: 0.5,
-          borderTopColor: "#fff",
+          borderTopColor: winnerColor(winner),
           paddingBottom: 10,
           // top: 0,
         }}
@@ -217,6 +219,22 @@ const GameBoard = () => {
       </View>
     </SafeAreaView>
   );
+};
+
+const winnerColor = (winner) => {
+  switch (winner) {
+    case "X":
+      return "#00b0ffff";
+
+    case "O":
+      return "#e0bad7ff";
+
+    case "Tie":
+      return "#8892b0";
+
+    default:
+      return "#fff";
+  }
 };
 
 export default GameBoard;
@@ -246,4 +264,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingBottom: 10,
   },
+  tie: {},
+  p1: {},
+  p2: {},
 });

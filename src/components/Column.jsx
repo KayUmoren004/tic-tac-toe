@@ -316,7 +316,6 @@ const Column = ({
       outputRange: ["rgba(136, 146, 176, 0)", "rgba(136, 146, 176, 1)"],
     }),
     borderRadius: 25 / 2,
-    borderWidth: 25,
   };
 
   return (
