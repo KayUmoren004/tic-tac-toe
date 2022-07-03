@@ -118,6 +118,9 @@ const GameBoard = () => {
     });
     setP1Moves([]);
     setP2Moves([]);
+    setCellsOccupied([]);
+    setCurrentPlayer(player1);
+    setIsDisabled(false);
     setWinner();
     setIsDisabled(false);
   };
