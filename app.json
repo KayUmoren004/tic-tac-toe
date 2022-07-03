@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "tic-tac-toe",
+    "name": "Tic-Tac-Toe",
     "slug": "tic-tac-toe",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,20 +9,24 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00b0ff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.godsonumoren.tic-tac-toe",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "backgroundColor": "#00b0ff"
+      },
+      "package": "com.godsonumoren.tic-tac-toe",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
